@@ -41,7 +41,7 @@ const ContextProvider=({children})=>{
    
     const answerCall=()=>{
         setCallAccepted(true)
-        const peer = new  Peer({initiator:false, trickle:false, stream })
+        const peer = new  Peer({initiator:false, trickle:false,config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' },{urls: 'stun:global.stun.twilio.com:3478?transport=udp' }]}, stream })
         peer.on("signal",(data)=>{
             socket.emit("answercall",{signal:data, to:call.from})
 
@@ -55,7 +55,7 @@ const ContextProvider=({children})=>{
         connectionRef.current = peer
     }
     const callUser=(id)=>{
-        const peer = new  Peer({initiator:true, trickle:false, stream })
+        const peer = new  Peer({initiator:true, trickle:false,config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' },{urls: 'stun:global.stun.twilio.com:3478?transport=udp' }]}, stream })
         peer.on("signal",(data)=>{
             socket.emit("calluser",{userToCall: id,signalData:data, from:me, name})
 
